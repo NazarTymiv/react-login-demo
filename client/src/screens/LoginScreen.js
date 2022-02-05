@@ -3,6 +3,7 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 
 import './LoginScreen.css'
+import Cookies from 'js-cookie';
 
 const LoginScreen = () => {
   let history = useNavigate()
@@ -12,7 +13,7 @@ const LoginScreen = () => {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    if(localStorage.getItem("authToken")) {
+    if(Cookies.get("authToken")) {
       history("/")
     }
   }, [history])
@@ -29,7 +30,7 @@ const LoginScreen = () => {
     try {
       const {data} = await axios.post('/api/auth/login', {email, password}, config)
 
-      localStorage.setItem("authToken", data.token)
+      Cookies.set("authToken", data.token)
 
       history("/")
     } catch (error) {

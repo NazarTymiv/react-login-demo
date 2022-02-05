@@ -1,5 +1,6 @@
 import * as actionTypes from '../constants/userConstants'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 export const getUser = () => async (dispatch) => {
     try {
@@ -8,7 +9,7 @@ export const getUser = () => async (dispatch) => {
         const config = {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              Authorization: `Bearer ${Cookies.get("authToken")}`,
             },
         };
 
@@ -27,6 +28,6 @@ export const getUser = () => async (dispatch) => {
 }
 
 export const removeUser = () => (dispatch) => {
-    localStorage.removeItem("authToken")
+    Cookies.remove("authToken")
     dispatch({type: actionTypes.GET_USER_RESET})
 }
